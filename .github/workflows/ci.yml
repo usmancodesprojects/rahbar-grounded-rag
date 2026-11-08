@@ -1,0 +1,82 @@
+name: CI
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [dev]
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: make install lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: make install test
+  manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-kubectl@v4
+        with: {version: 'v1.32.3'}
+      - run: |
+          curl -fsSL https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz | tar xz kubeconform
+          kubectl kustomize k8s/overlays/prod | ./kubeconform -strict -kubernetes-version 1.32.0 -summary
+          ./kubeconform -strict -kubernetes-version 1.32.0 -summary k8s/support
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        component: [api, ui, indexer]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t rahbar-${{ matrix.component }}:dev ${{ matrix.component }}
+  scan:
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        component: [api, ui, indexer]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t rahbar-${{ matrix.component }}:dev ${{ matrix.component }}
+      - uses: aquasecurity/trivy-action@0.30.0
+        with:
+          image-ref: rahbar-${{ matrix.component }}:dev
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+  e2e-eval:
+    needs: [lint, test, manifests, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install httpx==0.28.1 pyyaml==6.0.2
+      - uses: helm/kind-action@v1.12.0
+        with: {cluster_name: rahbar-ci, version: v0.27.0}
+      - run: bash scripts/install_ingress.sh
+      - run: |
+          for component in api ui indexer; do
+            docker build -t "rahbar-$component:dev" "$component"
+            kind load docker-image --name rahbar-ci "rahbar-$component:dev"
+          done
+      - run: bash scripts/fixture_cluster.sh
+      - run: bash scripts/fixture_ingress.sh
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: {name: fixture-results, path: fixture-results.json, if-no-files-found: ignore}
+      - if: failure()
+        run: |
+          kubectl -n rahbar get all
+          kubectl -n rahbar logs job/indexer --all-containers || true
+          kubectl -n rahbar logs -l app=api --tail=40 || true
