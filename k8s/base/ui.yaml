@@ -12,6 +12,7 @@ spec:
       labels:
         app: "ui"
     spec:
+      terminationGracePeriodSeconds: 20
       serviceAccountName: ui
       automountServiceAccountToken: false
       securityContext:
@@ -40,6 +41,10 @@ spec:
             limits:
               cpu: "200m"
               memory: "96Mi"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 5"]
           readinessProbe:
             httpGet:
               path: "/"
