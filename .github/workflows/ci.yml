@@ -47,6 +47,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         component: [api, ui, indexer]
     steps:
