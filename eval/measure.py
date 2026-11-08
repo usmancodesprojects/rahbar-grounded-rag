@@ -22,11 +22,12 @@ from pipeline.embed import embed
 from pipeline.extract import extract
 from pipeline.models import Document, Page
 from pipeline.run import discover
+from pipeline.store import store
 from run_eval import average, load_golden, recall_at_k
 
 PAIRS = [
-    (True, "What minimum CGPA avoids academic warning?", "What CGPA avoids academic warning?"),
-    (True, "What is the minimum CGPA for graduation?", "What is the required graduation CGPA?"),
+    (True, "What minimum CGPA avoids academic warning?", "What is the minimum CGPA to avoid academic warning?"),
+    (True, "What is the minimum CGPA for graduation?", "What is the minimum CGPA required to graduate?"),
     (False, "What minimum CGPA avoids academic warning?", "What minimum CGPA is needed to graduate?"),
     (False, "How many weeks are in a regular semester?", "How many weeks are in a summer semester?"),
     (False, "Can I drop a course during the first semester?", "Can I drop a course during the summer semester?"),
@@ -58,7 +59,7 @@ def eligible(meta: dict, question: str) -> bool:
     return meta["doc_version"] in filt["doc_version"]["$in"]
 
 
-def run(docs: list[Document], golden: Path, out: Path) -> None:
+def run(docs: list[Document], golden: Path, out: Path, publish_size: int | None) -> None:
     settings = get_settings()
     reader = ChromaRetriever(api_settings())
     questions = load_golden(golden)
@@ -71,7 +72,11 @@ def run(docs: list[Document], golden: Path, out: Path) -> None:
         pieces = [piece for doc in docs for piece in chunk(doc, size, overlap)]
         unique = list(dict.fromkeys(p.text for p in pieces if p.text not in embedded))
         embedded.update(zip(unique, embed(unique, settings), strict=True))
-        matrix = np.asarray([embedded[p.text] for p in pieces])
+        chunk_vectors = [embedded[p.text] for p in pieces]
+        if size == publish_size:
+            count = store(pieces, chunk_vectors, settings)
+            print(f"Published {count} chunks from {size}/{overlap}", flush=True)
+        matrix = np.asarray(chunk_vectors)
         matrix /= np.maximum(np.linalg.norm(matrix, axis=1, keepdims=True), 1e-12)
         refs = [{"chunk_id": p.id, **p.metadata()} for p in pieces]
         rows = []
@@ -106,7 +111,7 @@ def run(docs: list[Document], golden: Path, out: Path) -> None:
                           for p in report["pairs"]),
          "false_hits": sum(not p["equivalent"] and p["same_scope"] and p["similarity"] >= threshold
                            for p in report["pairs"])}
-        for threshold in (0.85, 0.90, 0.96)
+        for threshold in (0.90, 0.92, 0.96)
     ]
     out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
@@ -117,7 +122,8 @@ if __name__ == "__main__":
     parser.add_argument("--golden", type=Path, default=Path("eval/golden.yaml"))
     parser.add_argument("--out", type=Path, default=Path(".local-run/tuning.json"))
     parser.add_argument("--extract-only", action="store_true")
+    parser.add_argument("--publish-size", type=int, choices=(200, 400, 650))
     args = parser.parse_args()
     docs = documents(args.snapshot)
     if not args.extract_only:
-        run(docs, args.golden, args.out)
+        run(docs, args.golden, args.out, args.publish_size)

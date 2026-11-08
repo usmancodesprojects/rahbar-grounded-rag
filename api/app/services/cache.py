@@ -7,7 +7,7 @@ from typing import Any
 from ..schemas import AskResponse
 
 FOLLOW_UP = re.compile(
-    r"^\s*(and\b|what about\b|how about\b|why\b|what if\b|can (i|they) do (it|that)\b)",
+    r"^\s*(and\b|what about\b|how about\b|why[?.!\s]*$|why (is that|not)\b|can (i|they) do (it|that)\b)",
     re.I,
 )
 SENSITIVE = re.compile(r"\b(?:\d+(?:[.-]\d+)*|not|no|without|except|before|after|"

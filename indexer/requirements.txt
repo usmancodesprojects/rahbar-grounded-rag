@@ -5,7 +5,7 @@ posthog==5.4.0
 httpx==0.28.1
 pyyaml==6.0.2
 # Extraction. OCR also needs system packages in your Dockerfile: tesseract-ocr, poppler-utils.
-pdfplumber==0.11.10
+pypdfium2==5.15.1
 pytesseract==0.3.13
 
 beautifulsoup4==4.13.4

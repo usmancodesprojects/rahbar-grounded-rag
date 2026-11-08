@@ -30,7 +30,7 @@ jobs:
       - uses: azure/setup-kubectl@v4
         with: {version: 'v1.32.3'}
       - run: |
-          curl -fsSL https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz | tar xz kubeconform
+          curl -fsSL --retry 4 --retry-all-errors https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz | tar xz kubeconform
           kubectl kustomize k8s/overlays/prod | ./kubeconform -strict -kubernetes-version 1.32.0 -summary
           ./kubeconform -strict -kubernetes-version 1.32.0 -summary k8s/support
   build:
@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build --provenance=false -t rahbar-${{ matrix.component }}:dev ${{ matrix.component }}
-      - uses: aquasecurity/trivy-action@0.30.0
+      - uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: rahbar-${{ matrix.component }}:dev
           severity: HIGH,CRITICAL

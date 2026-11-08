@@ -24,7 +24,8 @@ def version_filter(question: str) -> dict[str, Any]:
         return {"superseded": bool(archived)}
     version = match[0]
     year = version[:4]
-    versions = [year, *(f"{year}-{month:02}" for month in range(1, 13))]
+    versions = [year, *(f"{year}-{month:02}" for month in range(1, 13)),
+                f"{year}-{(int(year) + 1) % 100:02}"]
     if version != year:
         versions = [version]
     return {"doc_version": {"$in": versions}}

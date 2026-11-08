@@ -12,6 +12,7 @@ import time
 import uuid
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from threading import Thread
 
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
@@ -20,11 +21,18 @@ from .config import get_settings
 from .logjson import configure_logging, request_id_var
 from .providers.llm import get_provider
 from .retrieval import get_retriever
-from .routes import ask, health, metrics
 from .retrieval.chroma import ChromaRetriever
+from .routes import ask, health, metrics
 from .services.cache import Cache
 
 log = logging.getLogger("rahbar.api")
+
+
+def check_startup_index(retriever: ChromaRetriever) -> None:
+    try:
+        retriever.snapshot()
+    except Exception as exc:
+        log.warning("index unavailable at startup", extra={"kind": type(exc).__name__})
 
 
 @asynccontextmanager
@@ -36,10 +44,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.provider = get_provider(settings)
     app.state.cache = Cache(settings.redis_url) if settings.redis_url else None
     if isinstance(app.state.retriever, ChromaRetriever):
-        try:
-            app.state.retriever.snapshot()
-        except Exception as exc:
-            log.warning("index unavailable at startup", extra={"kind": type(exc).__name__})
+        Thread(target=check_startup_index, args=(app.state.retriever,), daemon=True).start()
     log.info(
         "api started",
         extra={"retriever": settings.retriever, "llm_provider": settings.llm_provider,

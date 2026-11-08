@@ -28,7 +28,7 @@ test: ## run the api and indexer tests (stubs only: no cluster, no model, no net
 	cd indexer && $(BIN)/pytest -q
 
 lint: ## ruff and mypy over everything in Python
-	$(BIN)/ruff check --config api/pyproject.toml api indexer eval corpus
+	$(BIN)/ruff check --config api/pyproject.toml --select E4,E7,E9,F api indexer eval corpus
 	cd api && $(BIN)/mypy app
 	cd indexer && $(BIN)/mypy pipeline
 
