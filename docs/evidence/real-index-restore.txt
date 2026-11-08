@@ -1,0 +1,1 @@
+{"ts": "2026-11-08T09:49:03Z", "logger": "rahbar.indexer", "request_id": "249d7941edc541629b5fdd858473bda1", "msg": "restored measured real corpus snapshot", "chunks": 1024}

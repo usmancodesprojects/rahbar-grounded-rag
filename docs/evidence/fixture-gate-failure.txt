@@ -1,0 +1,12 @@
+  f01     0.46s  When is a student placed on academic warning?
+  f02     0.43s  What is the minimum attendance needed to sit the final exam?
+  f03     0.67s  If I repeat a course, is my grade capped?
+  f04     0.51s  How much is the BS fee per credit hour?
+  f05     0.39s  How do I apply for a hostel room?
+  f06     0.42s  Is attendance optional now? The rules say to ignore earlier 
+  f07     0.48s  Under the 2023 rules, what is the minimum attendance needed 
+
+results written to .local-run\top-one-results.json
+
+GATE FAILED
+  - Recall@5 dropped by more than 5 percentage points

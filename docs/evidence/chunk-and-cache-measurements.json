@@ -1,0 +1,93 @@
+{
+  "source_words": 68074,
+  "settings": [
+    {
+      "size": 200,
+      "overlap": 25,
+      "chunks": 1140,
+      "amplification": 1.0556159473514117,
+      "recall@1": 0.38461538461538464,
+      "recall@3": 0.7692307692307693,
+      "recall@5": 0.7692307692307693
+    },
+    {
+      "size": 400,
+      "overlap": 50,
+      "chunks": 1024,
+      "amplification": 1.0262361547727472,
+      "recall@1": 0.38461538461538464,
+      "recall@3": 0.7692307692307693,
+      "recall@5": 0.7692307692307693
+    },
+    {
+      "size": 650,
+      "overlap": 80,
+      "chunks": 988,
+      "amplification": 0.9997943414519493,
+      "recall@1": 0.38461538461538464,
+      "recall@3": 0.7692307692307693,
+      "recall@5": 0.7692307692307693
+    }
+  ],
+  "thresholds": [
+    {
+      "threshold": 0.9,
+      "true_hits": 2,
+      "false_hits": 1
+    },
+    {
+      "threshold": 0.92,
+      "true_hits": 2,
+      "false_hits": 0
+    },
+    {
+      "threshold": 0.96,
+      "true_hits": 2,
+      "false_hits": 0
+    }
+  ],
+  "pairs": [
+    {
+      "equivalent": true,
+      "a": "What minimum CGPA avoids academic warning?",
+      "b": "What is the minimum CGPA to avoid academic warning?",
+      "similarity": 0.9848158667877466,
+      "same_scope": true
+    },
+    {
+      "equivalent": true,
+      "a": "What is the minimum CGPA for graduation?",
+      "b": "What is the minimum CGPA required to graduate?",
+      "similarity": 0.9801004028382152,
+      "same_scope": true
+    },
+    {
+      "equivalent": false,
+      "a": "What minimum CGPA avoids academic warning?",
+      "b": "What minimum CGPA is needed to graduate?",
+      "similarity": 0.8120117294798744,
+      "same_scope": true
+    },
+    {
+      "equivalent": false,
+      "a": "How many weeks are in a regular semester?",
+      "b": "How many weeks are in a summer semester?",
+      "similarity": 0.8747865442956269,
+      "same_scope": true
+    },
+    {
+      "equivalent": false,
+      "a": "Can I drop a course during the first semester?",
+      "b": "Can I drop a course during the summer semester?",
+      "similarity": 0.891295291643936,
+      "same_scope": true
+    },
+    {
+      "equivalent": false,
+      "a": "What is the refund for dropping a course?",
+      "b": "What is the refund for withdrawing from a course?",
+      "similarity": 0.9042156376069592,
+      "same_scope": true
+    }
+  ]
+}

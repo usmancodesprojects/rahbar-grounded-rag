@@ -1,0 +1,5 @@
+{"ts": "2026-11-08T09:08:23Z", "logger": "rahbar.indexer", "request_id": "013f3d76448e416c8d667ee546066edd", "msg": "indexer starting", "dummy": false, "embed_model": "fixture-hash-v1", "collection": "rahbar", "chroma": "chroma:8000", "pod": "indexer-6gqs4"}
+{"ts": "2026-11-08T09:08:24Z", "logger": "rahbar.indexer", "request_id": "013f3d76448e416c8d667ee546066edd", "msg": "chunked", "source": "academic-rules-2023.md", "chunks": 4, "pages": 1, "ocr_pages": []}
+{"ts": "2026-11-08T09:08:24Z", "logger": "rahbar.indexer", "request_id": "013f3d76448e416c8d667ee546066edd", "msg": "chunked", "source": "academic-rules-2026.md", "chunks": 5, "pages": 1, "ocr_pages": []}
+{"ts": "2026-11-08T09:08:24Z", "logger": "rahbar.indexer", "request_id": "013f3d76448e416c8d667ee546066edd", "msg": "chunked", "source": "fees-2026.md", "chunks": 4, "pages": 1, "ocr_pages": []}
+{"ts": "2026-11-08T09:08:29Z", "logger": "rahbar.indexer", "request_id": "013f3d76448e416c8d667ee546066edd", "msg": "indexer finished", "chunks": 13, "seconds": 5.5}

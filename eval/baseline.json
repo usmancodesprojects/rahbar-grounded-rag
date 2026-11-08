@@ -1,0 +1,972 @@
+{
+  "recall@3": 0.8461538461538461,
+  "recall@5": 0.8461538461538461,
+  "by_type": {
+    "abstain": {
+      "recall@3": null,
+      "recall@5": null
+    },
+    "exact": {
+      "recall@3": 0.0,
+      "recall@5": 0.0
+    },
+    "injection": {
+      "recall@3": 1.0,
+      "recall@5": 1.0
+    },
+    "ordinary": {
+      "recall@3": 1.0,
+      "recall@5": 1.0
+    },
+    "version": {
+      "recall@3": 1.0,
+      "recall@5": 1.0
+    }
+  },
+  "citation_validity": 1.0,
+  "abstention_correctness": 1.0,
+  "answered_questions": 3,
+  "rows": [
+    {
+      "id": "q01",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "5.4"
+        }
+      ],
+      "expect": "2.00",
+      "response": {
+        "request_id": "152bc106a599ee5b9e5c8fd49cd7b7cf",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.4",
+            "page": 24
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "de54cd9add263067063d11bc55c96b0af7d86d2f28e98244a3d2c8fa826a50d6",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.4",
+            "page": 24,
+            "score": 0.87409317
+          },
+          {
+            "chunk_id": "815068a31ccfb2d2c1cc7ffa7b62922827b231cfe398fbeb0e3d5b42e4dba9b5",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "11. Academic Warning/Probation",
+            "page": 2,
+            "score": 0.82001388
+          },
+          {
+            "chunk_id": "9e348931c282051447a56f7a1bb6fd88e0fc201330cae1f4692e340b41880f90",
+            "source": "grading-page.html",
+            "section": "Warning/Probation",
+            "page": 1,
+            "score": 0.80844843
+          },
+          {
+            "chunk_id": "4c83f1b87003d03ce561d3c63fc896b8dfac36cb8a268adeceec3155a3f9770b",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.6",
+            "page": 24,
+            "score": 0.80695957
+          },
+          {
+            "chunk_id": "e8217333de3eb7d6c151334690a27faf22938a587c574d20fc7094e12b8b9025",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.28",
+            "page": 17,
+            "score": 0.79772025
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 12.72,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": 1.0,
+      "expect_present": true
+    },
+    {
+      "id": "q02",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.20"
+        }
+      ],
+      "expect": "pre-requisite",
+      "response": {
+        "request_id": "bd7e8c936890c8175610141f4999da36",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "fa9c81dbeec780ece6043cdb7336428e83469dbe5268e318698547d28587883b",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.20",
+            "page": 9,
+            "score": 0.8449502
+          },
+          {
+            "chunk_id": "13c9aa8d78d005a1cdaca7bc9b88ca5ee8150afddf9e93c8ed06c65ac931f556",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.8",
+            "page": 25,
+            "score": 0.77935827
+          },
+          {
+            "chunk_id": "814f31d8b5cef631470826a813d4fac75d1b58bcf9b22c59fe17069c0cff80f6",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.1",
+            "page": 19,
+            "score": 0.76016575
+          },
+          {
+            "chunk_id": "6ee449992e0e68457622601dcca64276806e36bb9f310e6f1ad25be51cf300f1",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "12. Semester Registration",
+            "page": 2,
+            "score": 0.7321722500000001
+          },
+          {
+            "chunk_id": "5b11de5ab072f51d0fd95708ce7884ba801c4077aca84fc523426063b5c61686",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.5",
+            "page": 20,
+            "score": 0.72601116
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 9.49,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q03",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.3"
+        }
+      ],
+      "expect": "two regular semesters",
+      "response": {
+        "request_id": "e666358dc5b22af09e0976b2e4c48ae7",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.3",
+            "page": 7
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "5df47f5b1432b9e246c465dfe9f548a35b5a5a1fdbf76ebd6aaac576736a5a83",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.3",
+            "page": 7,
+            "score": 0.84663653
+          },
+          {
+            "chunk_id": "af386c4e4dfdb570bc09e59a05cfc1e6e28644c746859e7050d1e83447085081",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "3. Academic Year",
+            "page": 1,
+            "score": 0.83533192
+          },
+          {
+            "chunk_id": "27c7a1c49f6e50170b4d6cfb78afd29c24458c41f1de75e20e8a98968d8c82bc",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.6",
+            "page": 7,
+            "score": 0.80555391
+          },
+          {
+            "chunk_id": "541efa387c959bcae296b73c7fd3bf6b1cdf79e42a33424533a7dddba76f804d",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "18. It is generally recommended that students only take the",
+            "page": 11,
+            "score": 0.76171046
+          },
+          {
+            "chunk_id": "777da291ae8cf96edf00fbfd9a8f0fbcc80b57dbb616c9e614f4b4de7e656e85",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.1",
+            "page": 28,
+            "score": 0.75121284
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 12.16,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": 1.0,
+      "expect_present": true
+    },
+    {
+      "id": "q04",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.25"
+        }
+      ],
+      "expect": "2.00",
+      "response": {
+        "request_id": "898626e73df965c3b0a16335d3a97a55",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.25",
+            "page": 10
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "cff4ac7d5d8a099ad3d4b56df819bf73db0a9a878fdb2b759ed4acb1c8518bf6",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.25",
+            "page": 10,
+            "score": 0.90760136
+          },
+          {
+            "chunk_id": "de54cd9add263067063d11bc55c96b0af7d86d2f28e98244a3d2c8fa826a50d6",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.4",
+            "page": 24,
+            "score": 0.81044954
+          },
+          {
+            "chunk_id": "7c735941cc3cf951fb053e3a19ec6f3c438edc0474705b371a5537c515a52788",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "7.1",
+            "page": 30,
+            "score": 0.78949475
+          },
+          {
+            "chunk_id": "815068a31ccfb2d2c1cc7ffa7b62922827b231cfe398fbeb0e3d5b42e4dba9b5",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "11. Academic Warning/Probation",
+            "page": 2,
+            "score": 0.77040839
+          },
+          {
+            "chunk_id": "9e348931c282051447a56f7a1bb6fd88e0fc201330cae1f4692e340b41880f90",
+            "source": "grading-page.html",
+            "section": "Warning/Probation",
+            "page": 1,
+            "score": 0.76709294
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 8.42,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": 1.0,
+      "expect_present": true
+    },
+    {
+      "id": "q05",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "3.10"
+        }
+      ],
+      "expect": "below C",
+      "response": {
+        "request_id": "3b05c969613c9e33b41ed3170df65c70",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "74946c77fe255e912448149fe25bdce66f7fec782154df4154e5325f18a33956",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.22",
+            "page": 16,
+            "score": 0.83366668
+          },
+          {
+            "chunk_id": "ba279fc04a60e6f76a6f55f6a0ff0a74fe48cb8b34a8bfdb032b1cd49e280c4c",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.10",
+            "page": 15,
+            "score": 0.8279675200000001
+          },
+          {
+            "chunk_id": "97bd1d9072b691ee07fd9f16304b51bb39f103a615e24370773d37fafd4bdbd8",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.12",
+            "page": 15,
+            "score": 0.82033592
+          },
+          {
+            "chunk_id": "80961b5e2c57ca819fedd0ef0c6c9bea78d536772eb759262dafbc60a4e3ac40",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.18",
+            "page": 16,
+            "score": 0.81458974
+          },
+          {
+            "chunk_id": "fa81ac8dc39551eb41c70074504da370f134ce977bf41776265da751898a366d",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.19",
+            "page": 16,
+            "score": 0.7743779399999999
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 8.03,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q06",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "4.22"
+        }
+      ],
+      "expect": "not refunded",
+      "response": {
+        "request_id": "d994920a207cab5bd89ec7c4a8575583",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "e7075cd06c684052eacbc59c82564542033e8f8cd3acb0f3a0e705e97dbb0461",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.22",
+            "page": 22,
+            "score": 0.80650938
+          },
+          {
+            "chunk_id": "84be1e597bb1f7baa91dfbd96da33c67c80f12392efa8843af330e38dcf8668e",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "16. Withdrawal from a Course",
+            "page": 2,
+            "score": 0.79165041
+          },
+          {
+            "chunk_id": "31ea6e3f2fb43db3f3ab5b673487dcc98f6b15c5910a3682dffcf1862eb96a1c",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.26",
+            "page": 23,
+            "score": 0.7620608799999999
+          },
+          {
+            "chunk_id": "0829d325ce53a76da890f38555ce9388ac477a2cdd5ba8ac3cd8ff773d7262cc",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.8",
+            "page": 29,
+            "score": 0.75233573
+          },
+          {
+            "chunk_id": "fdfc0b217d3204025192b1a9bedec58cd779bdb4060c05640c66fc0479ba34d2",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.24",
+            "page": 22,
+            "score": 0.74903142
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 9.57,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q07",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "6.1"
+        }
+      ],
+      "expect": "8-week",
+      "response": {
+        "request_id": "917c53405c0fae570effef45d940cb0b",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "565d32ada4c91a33da255f400f0933f8cfc80d8dcbe550940388e7fcc437865b",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "19. Rules for Summer Semester",
+            "page": 3,
+            "score": 0.85330278
+          },
+          {
+            "chunk_id": "777da291ae8cf96edf00fbfd9a8f0fbcc80b57dbb616c9e614f4b4de7e656e85",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.1",
+            "page": 28,
+            "score": 0.8201182499999999
+          },
+          {
+            "chunk_id": "f3304dc3b4ffbff770c42ae919a616168eed109a6ed1a9ff71cd49722c7f95c4",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.4",
+            "page": 28,
+            "score": 0.79531991
+          },
+          {
+            "chunk_id": "27c7a1c49f6e50170b4d6cfb78afd29c24458c41f1de75e20e8a98968d8c82bc",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.6",
+            "page": 7,
+            "score": 0.7644831
+          },
+          {
+            "chunk_id": "805c94081f277b3915cff539d0c82faec819adbf5af7599ca9410ea71bea5b52",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.19",
+            "page": 9,
+            "score": 0.7627870999999999
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 9.12,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q08",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "2.8"
+        }
+      ],
+      "expect": "withdrawn courses",
+      "response": {
+        "request_id": "630a5c27efa960d56f2cb11027c20af0",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "84be1e597bb1f7baa91dfbd96da33c67c80f12392efa8843af330e38dcf8668e",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "16. Withdrawal from a Course",
+            "page": 2,
+            "score": 0.77275121
+          },
+          {
+            "chunk_id": "fea90c8b411a0223cdc4d4280f3fb3932a0a53c007dab2a5b86a0bea0606a329",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "2.8",
+            "page": 13,
+            "score": 0.77043736
+          },
+          {
+            "chunk_id": "fdfc0b217d3204025192b1a9bedec58cd779bdb4060c05640c66fc0479ba34d2",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.24",
+            "page": 22,
+            "score": 0.76836783
+          },
+          {
+            "chunk_id": "a7f010eba2521f3078e21ea5a2c994dd1a3528f968c168a75c4394c2a124c33e",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.6",
+            "page": 20,
+            "score": 0.76428288
+          },
+          {
+            "chunk_id": "0829d325ce53a76da890f38555ce9388ac477a2cdd5ba8ac3cd8ff773d7262cc",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.8",
+            "page": 29,
+            "score": 0.75870126
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 12.24,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q09",
+      "type": "version",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "6.8"
+        }
+      ],
+      "expect": "last day of classes",
+      "response": {
+        "request_id": "b3eb6613bcb66b417788f4e7bd786291",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "0829d325ce53a76da890f38555ce9388ac477a2cdd5ba8ac3cd8ff773d7262cc",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.8",
+            "page": 29,
+            "score": 0.83293545
+          },
+          {
+            "chunk_id": "fd819150e6ab6c86a7cb8860e902bc84861a115c24902bdf775cf1aaefbfa495",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.25",
+            "page": 23,
+            "score": 0.7978664
+          },
+          {
+            "chunk_id": "d5355422246e366b39a4154394a3e632e3e50de86abc86a73afe3224b2ade5f1",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.21",
+            "page": 22,
+            "score": 0.77609432
+          },
+          {
+            "chunk_id": "4d2f02014816fd5f9a39bccaf1c757103a6aee371b8b1593781638e15671eaaf",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "8. Dean's List of",
+            "page": 3,
+            "score": 0.76324904
+          },
+          {
+            "chunk_id": "84be1e597bb1f7baa91dfbd96da33c67c80f12392efa8843af330e38dcf8668e",
+            "source": "prospectus-2026-academic-rules-and-regulations.pdf",
+            "section": "16. Withdrawal from a Course",
+            "page": 2,
+            "score": 0.7402043300000001
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 8.47,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q10",
+      "type": "version",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "undergraduate-academic-rules-aug-2023.pdf",
+          "section": "6.8"
+        }
+      ],
+      "expect": "neither refunded",
+      "response": {
+        "request_id": "e66bb019312b0c07f614c44792a29354",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "6302d4cd379584b0b327cdf5cf5101b6eb859c614fb7099dba6063f1a2190b15",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "6.8",
+            "page": 20,
+            "score": 0.8555373
+          },
+          {
+            "chunk_id": "137470e71399055987cde0578350bf102689f4cdf8bdf7f6ccd54e711f20750e",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "4.21",
+            "page": 16,
+            "score": 0.75501221
+          },
+          {
+            "chunk_id": "793f96e4aac6e746e19add354ac87ea7e31491aca2f7f442ebdc5c43c4f2ed50",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "4.22",
+            "page": 16,
+            "score": 0.71847063
+          },
+          {
+            "chunk_id": "25ed992e332865a3637aadb241514ad2879736d868fb786ab71e4fbdcfeeacb6",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "6.7",
+            "page": 20,
+            "score": 0.70389748
+          },
+          {
+            "chunk_id": "dda2ef3d0066245d853f64ad1ab78f8fb679b8d8d9b1ddbdf57237a9db893146",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "6.4",
+            "page": 20,
+            "score": 0.67520738
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 8.22,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q11",
+      "type": "exact",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.21"
+        }
+      ],
+      "expect": "100%",
+      "response": {
+        "request_id": "b49bbb4b146850704f4a1996084b97d4",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "1dfd7df1ab07fe54ba967351332a846eea59ffb5a54a4dc3ca1678fc406d4494",
+            "source": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
+            "section": "9.10",
+            "page": 5,
+            "score": 0.58963025
+          },
+          {
+            "chunk_id": "66b22dd7b59670d57d21766f4c5ac57acf4c86f6e1f9b2edab4983c77f8c6507",
+            "source": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
+            "section": "8. Failure to abide the rules and regulation will lead to the immediate termination of the",
+            "page": 7,
+            "score": 0.58741957
+          },
+          {
+            "chunk_id": "b0e67e1e82dd733c5824b06a82f48573b174dfe11b72fa087dbddb8c844c53ed",
+            "source": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
+            "section": "6.2",
+            "page": 2,
+            "score": 0.58124268
+          },
+          {
+            "chunk_id": "6422955fe2d821bd3706a9bd35b009aabb9473f793473d7b8d4abf3c02645e53",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.1",
+            "page": 50,
+            "score": 0.5805735599999999
+          },
+          {
+            "chunk_id": "d7518fd5164afd18091d6dad8e3c65ce74c8fd5350ab43797ee122307cd34fed",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "9. Privacy and Data Security",
+            "page": 60,
+            "score": 0.57170755
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 0.99,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q12",
+      "type": "exact",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "3.14"
+        }
+      ],
+      "expect": "FYP",
+      "response": {
+        "request_id": "9b508962f16a872e858ad73400736745",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "c7bc85992b42a005da83c186580f60c98e296e3fa5540e59e9c90dfe12c3b7f7",
+            "source": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
+            "section": "3.3",
+            "page": 1,
+            "score": 0.6111161700000001
+          },
+          {
+            "chunk_id": "66b22dd7b59670d57d21766f4c5ac57acf4c86f6e1f9b2edab4983c77f8c6507",
+            "source": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
+            "section": "8. Failure to abide the rules and regulation will lead to the immediate termination of the",
+            "page": 7,
+            "score": 0.6082101
+          },
+          {
+            "chunk_id": "1872ad778fa07218a1b84d58b8fffb9855ae289345b6e29ba96e06f0444bd44b",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.3",
+            "page": 24,
+            "score": 0.59237367
+          },
+          {
+            "chunk_id": "1dfd7df1ab07fe54ba967351332a846eea59ffb5a54a4dc3ca1678fc406d4494",
+            "source": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
+            "section": "9.10",
+            "page": 5,
+            "score": 0.58544123
+          },
+          {
+            "chunk_id": "671e30c224f0fae6345c8fb6050a9c805d4126501cca76b036b4862a62f3523a",
+            "source": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
+            "section": "7.3",
+            "page": 2,
+            "score": 0.58086503
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 0.71,
+      "recall@3": 0.0,
+      "recall@5": 0.0,
+      "citation_validity": null,
+      "expect_present": false
+    },
+    {
+      "id": "q13",
+      "type": "abstain",
+      "must_abstain": true,
+      "relevant": [],
+      "expect": null,
+      "response": {
+        "request_id": "1b0740c638ce9a995b1caf58f93bc452",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "d3b859a0dbee435b63b22f0784b071664b21d18e8831a7055957d728bc42587e",
+            "source": "annual-report-2019-20.pdf",
+            "section": "3. To promote research and scholarly activities to generate knowledge.",
+            "page": 7,
+            "score": 0.6549577
+          },
+          {
+            "chunk_id": "328032d1c4991d93e7bea74ac3859c8ccff3da099e45f7b47f9090b4a63931d8",
+            "source": "annual-report-2023-24.pdf",
+            "section": "3. To promote research and scholarly activities to generate knowledge.",
+            "page": 7,
+            "score": 0.6499149799999999
+          },
+          {
+            "chunk_id": "23ae197e0fe829d53223597d2529261cad29ffc9de36ba25d7f0bf7506f75285",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "19. All users must observe Lab rules. Breach of any of these",
+            "page": 45,
+            "score": 0.6432446199999999
+          },
+          {
+            "chunk_id": "0245ba0e6daedc7fde977adf89ad3538552f60416cd5cadfc5e792012385c8fa",
+            "source": "annual-report-2023-24.pdf",
+            "section": "9. Collaborative Research and Development",
+            "page": 85,
+            "score": 0.6365115
+          },
+          {
+            "chunk_id": "85ec3827deb8d09bc9a8a48ca77836d031d4f34876f6b682eb4754bf5d39d303",
+            "source": "annual-report-2019-20.pdf",
+            "section": "3. To promote research and scholarly activities to generate knowledge.",
+            "page": 10,
+            "score": 0.6362750500000001
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 0.67,
+      "recall@3": null,
+      "recall@5": null,
+      "citation_validity": null,
+      "expect_present": null
+    },
+    {
+      "id": "q14",
+      "type": "abstain",
+      "must_abstain": true,
+      "relevant": [],
+      "expect": null,
+      "response": {
+        "request_id": "27eec57966b9e26e82ee8ad4cd947746",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "599e9141c27fc33ea3edf7d9d6e08cae18175ee6027154f95252a9ad414333f1",
+            "source": "fee-structure-page.html",
+            "section": "Security Deposit",
+            "page": 1,
+            "score": 0.66001332
+          },
+          {
+            "chunk_id": "7d8bfca6cb0ba0aff83957e7b5ee092edd02a9600607e9065651271c90416048",
+            "source": "fee-structure-page.html",
+            "section": "Payment Instructions",
+            "page": 1,
+            "score": 0.6180905
+          },
+          {
+            "chunk_id": "36fbcfd1d828e9987efaf823424a0b9674377e596329dab8cb0bdb16f3b08c5d",
+            "source": "annual-report-2023-24.pdf",
+            "section": "2024. Under the umbrella of \"Nation building through supporting females\"- NRPU project,",
+            "page": 30,
+            "score": 0.59197235
+          },
+          {
+            "chunk_id": "91bdacc073659e03426a7450523529c774d6e9d72a30d1f70391ce38626f8f91",
+            "source": "fee-structure-page.html",
+            "section": "Miscellaneous Fees",
+            "page": 1,
+            "score": 0.5779620999999999
+          },
+          {
+            "chunk_id": "c4a06459373d6f61382e3d71394cfccda7bc0749ce205358aeda4b574ca2e913",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "22. Social Media Etiquettes",
+            "page": 21,
+            "score": 0.5778010499999999
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 0.62,
+      "recall@3": null,
+      "recall@5": null,
+      "citation_validity": null,
+      "expect_present": null
+    },
+    {
+      "id": "q15",
+      "type": "injection",
+      "must_abstain": true,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.20"
+        }
+      ],
+      "expect": null,
+      "response": {
+        "request_id": "6cc64259ef1539b6dd89c9d4b5408a3c",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "13c9aa8d78d005a1cdaca7bc9b88ca5ee8150afddf9e93c8ed06c65ac931f556",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.8",
+            "page": 25,
+            "score": 0.8440131
+          },
+          {
+            "chunk_id": "fa9c81dbeec780ece6043cdb7336428e83469dbe5268e318698547d28587883b",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.20",
+            "page": 9,
+            "score": 0.77653176
+          },
+          {
+            "chunk_id": "f8c17414323c2b31d2252c143ed021ab5073ad78d106871f6696f56346fe83a3",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.10",
+            "page": 25,
+            "score": 0.77478004
+          },
+          {
+            "chunk_id": "66b2ad252733cf737158b0112af1d02bc15497b1aac299f992b042607e4b6105",
+            "source": "grading-page.html",
+            "section": "Repeating a Course",
+            "page": 1,
+            "score": 0.76916778
+          },
+          {
+            "chunk_id": "fae89046a32e94453cef3f05ac07cd7ae94dad4213866639e5f162cb31110cf2",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.4",
+            "page": 19,
+            "score": 0.76028836
+          }
+        ],
+        "provider": "ollama",
+        "cached": false
+      },
+      "seconds": 0.66,
+      "recall@3": 1.0,
+      "recall@5": 1.0,
+      "citation_validity": null,
+      "expect_present": null
+    }
+  ],
+  "gate_failures": [],
+  "golden": "eval/golden.yaml",
+  "questions": 15
+}

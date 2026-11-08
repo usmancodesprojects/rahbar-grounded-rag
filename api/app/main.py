@@ -1,0 +1,96 @@
+"""The API process. It reads the index; it never builds it (section 4.2).
+
+Run locally with stubs:   make dev     (then open http://localhost:8000)
+Run in the container:     uvicorn app.main:app --host 0.0.0.0 --port 8000
+"""
+
+from __future__ import annotations
+
+import logging
+import os
+import time
+import uuid
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+from threading import Thread
+
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+
+from .config import get_settings
+from .logjson import configure_logging, request_id_var
+from .providers.llm import get_provider
+from .retrieval import get_retriever
+from .retrieval.chroma import ChromaRetriever
+from .routes import ask, health, metrics
+from .services.cache import Cache
+
+log = logging.getLogger("rahbar.api")
+
+
+def check_startup_index(retriever: ChromaRetriever) -> None:
+    try:
+        retriever.snapshot()
+    except Exception as exc:
+        log.warning("index unavailable at startup", extra={"kind": type(exc).__name__})
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    settings = get_settings()
+    configure_logging(settings.log_level)
+    app.state.settings = settings
+    app.state.retriever = get_retriever(settings)
+    app.state.provider = get_provider(settings)
+    app.state.cache = Cache(settings.redis_url) if settings.redis_url else None
+    if isinstance(app.state.retriever, ChromaRetriever):
+        Thread(target=check_startup_index, args=(app.state.retriever,), daemon=True).start()
+    log.info(
+        "api started",
+        extra={"retriever": settings.retriever, "llm_provider": settings.llm_provider,
+               "embed_model": settings.embed_model, "top_k": settings.top_k},
+    )
+    yield
+
+
+app = FastAPI(title="RAHBAR API", lifespan=lifespan)
+
+
+@app.middleware("http")
+async def request_context(request: Request, call_next):  # type: ignore[no-untyped-def]
+    rid = request.headers.get("X-Request-ID") or uuid.uuid4().hex
+    token = request_id_var.set(rid)
+    usage = [0, 0]
+    usage_token = metrics.REQUEST_TOKENS.set(usage)
+    start = time.perf_counter()
+    status = 500
+    try:
+        response = await call_next(request)
+        status = response.status_code
+        response.headers["X-Request-ID"] = rid
+        return response
+    finally:
+        route = request.scope.get("route")
+        path = getattr(route, "path", "unmatched")   # route template, not the raw URL
+        elapsed = time.perf_counter() - start
+        metrics.REQUESTS.labels(path=path, status=str(status)).inc()
+        metrics.LATENCY.labels(path=path).observe(elapsed)
+        if path not in ("/healthz", "/readyz", "/metrics"):
+            log.info("request", extra={"path": path, "status": status,
+                                       "ms": round(elapsed * 1000, 1)})
+        if path == "/api/ask":
+            metrics.TOKENS.labels("input").observe(usage[0])
+            metrics.TOKENS.labels("output").observe(usage[1])
+        metrics.REQUEST_TOKENS.reset(usage_token)
+        request_id_var.reset(token)
+
+
+app.include_router(health.router)
+app.include_router(metrics.router)
+app.include_router(ask.router)
+
+# Development only: `make dev` serves the chat UI from this process, so you can try it
+# without a cluster. On Kubernetes the ui Deployment serves it and this stays unset.
+_ui_dir = os.environ.get("SERVE_UI_DIR")
+if _ui_dir:
+    app.mount("/", StaticFiles(directory=_ui_dir, html=True), name="ui")

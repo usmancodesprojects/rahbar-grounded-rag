@@ -1,0 +1,83 @@
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "redis"
+  template:
+    metadata:
+      labels:
+        app: "redis"
+    spec:
+      serviceAccountName: redis
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: "redis"
+          imagePullPolicy: "IfNotPresent"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          image: "redis:7.4.2-alpine"
+          ports:
+            - name: "redis"
+              containerPort: 6379
+          args:
+            - "redis-server"
+            - "--appendonly"
+            - "yes"
+            - "--dir"
+            - "/data"
+            - "--maxmemory"
+            - "96mb"
+            - "--maxmemory-policy"
+            - "allkeys-lru"
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "96Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            exec:
+              command:
+                - "redis-cli"
+                - "ping"
+            periodSeconds: 5
+          volumeMounts:
+            - name: "data"
+              mountPath: "/data"
+            - name: "tmp"
+              mountPath: "/tmp"
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "data"
+          persistentVolumeClaim:
+            claimName: "redis-data"
+  strategy:
+    type: Recreate
+---
+apiVersion: "v1"
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "1Gi"

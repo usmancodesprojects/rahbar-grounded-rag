@@ -1,0 +1,9 @@
+NAME                             READY   STATUS      RESTARTS   AGE     IP            NODE                              NOMINATED NODE   READINESS GATES
+api-7669d89645-7ztpg             1/1     Running     0          73s     10.244.0.20   rahbar-assignment-control-plane   <none>           <none>
+api-7669d89645-gdxb7             1/1     Running     0          64s     10.244.0.21   rahbar-assignment-control-plane   <none>           <none>
+api-7669d89645-wql6h             1/1     Running     0          2m22s   10.244.0.16   rahbar-assignment-control-plane   <none>           <none>
+chroma-0                         1/1     Running     0          17m     10.244.0.14   rahbar-assignment-control-plane   <none>           <none>
+fixture-embed-667d546f99-lfjph   1/1     Running     0          2m24s   10.244.0.15   rahbar-assignment-control-plane   <none>           <none>
+indexer-6gqs4                    0/1     Completed   0          86s     10.244.0.19   rahbar-assignment-control-plane   <none>           <none>
+redis-5f86759678-w62wq           1/1     Running     0          17m     10.244.0.13   rahbar-assignment-control-plane   <none>           <none>
+ui-644946f55c-f7kd6              1/1     Running     0          17m     10.244.0.9    rahbar-assignment-control-plane   <none>           <none>
