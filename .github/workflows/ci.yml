@@ -29,10 +29,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: azure/setup-kubectl@v4
         with: {version: 'v1.32.3'}
+      - uses: actions/setup-go@v5
+        with: {go-version: '1.24', cache: false}
       - run: |
-          curl -fsSL --retry 4 --retry-all-errors https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz | tar xz kubeconform
-          kubectl kustomize k8s/overlays/prod | ./kubeconform -strict -kubernetes-version 1.32.0 -summary
-          ./kubeconform -strict -kubernetes-version 1.32.0 -summary k8s/support
+          GOBIN="$RUNNER_TEMP" go install github.com/yannh/kubeconform/cmd/kubeconform@v0.6.7
+          kubectl kustomize k8s/overlays/prod | "$RUNNER_TEMP/kubeconform" -strict -kubernetes-version 1.32.0 -summary
+          "$RUNNER_TEMP/kubeconform" -strict -kubernetes-version 1.32.0 -summary k8s/support
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -50,14 +52,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build --provenance=false -t rahbar-${{ matrix.component }}:dev ${{ matrix.component }}
-      - uses: aquasecurity/trivy-action@v0.36.0
-        with:
-          image-ref: rahbar-${{ matrix.component }}:dev
-          severity: HIGH,CRITICAL
-          ignore-unfixed: true
-          exit-code: '1'
+      - name: Run Trivy on the built image
+        run: |
+          docker save "rahbar-${{ matrix.component }}:dev" -o "$RUNNER_TEMP/image.tar"
+          docker run --rm -v "$RUNNER_TEMP/image.tar:/scan/image.tar:ro" aquasec/trivy:0.76.2 \
+            image --input /scan/image.tar --scanners vuln --severity HIGH,CRITICAL \
+            --ignore-unfixed --exit-code 1
   e2e-eval:
-    needs: [lint, test, manifests, build]
+    needs: [lint, test, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
