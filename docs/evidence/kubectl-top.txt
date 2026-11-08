@@ -1,0 +1,40 @@
+2026-11-08T14:26:16.3300980+05:00
+POD                              NAME            CPU(cores)   MEMORY(bytes)   
+api-7669d89645-2kcl8             api             28m          66Mi            
+api-7669d89645-gdxb7             api             25m          68Mi            
+api-7669d89645-wql6h             api             23m          68Mi            
+chroma-0                         chroma          10m          22Mi            
+fixture-embed-667d546f99-lfjph   fixture-embed   1m           15Mi            
+real-corpus-m4cvg                indexer         747m         100Mi           
+redis-5f86759678-w62wq           redis           132m         3Mi             
+ui-644946f55c-fzgkg              ui              1m           2Mi             
+2026-11-08T14:26:39.5372778+05:00
+POD                              NAME            CPU(cores)   MEMORY(bytes)   
+api-7669d89645-2kcl8             api             28m          66Mi            
+api-7669d89645-gdxb7             api             20m          68Mi            
+api-7669d89645-wql6h             api             26m          68Mi            
+chroma-0                         chroma          22m          22Mi            
+fixture-embed-667d546f99-lfjph   fixture-embed   3m           15Mi            
+real-corpus-m4cvg                indexer         492m         178Mi           
+redis-5f86759678-w62wq           redis           136m         3Mi             
+ui-644946f55c-fzgkg              ui              1m           2Mi             
+2026-11-08T14:27:04.0106710+05:00
+POD                              NAME            CPU(cores)   MEMORY(bytes)   
+api-7669d89645-2kcl8             api             19m          66Mi            
+api-7669d89645-gdxb7             api             24m          68Mi            
+api-7669d89645-wql6h             api             21m          68Mi            
+chroma-0                         chroma          21m          22Mi            
+fixture-embed-667d546f99-lfjph   fixture-embed   1m           15Mi            
+real-corpus-m4cvg                indexer         492m         178Mi           
+redis-5f86759678-w62wq           redis           122m         5Mi             
+ui-644946f55c-fzgkg              ui              1m           2Mi             
+2026-11-08T14:27:22.2452010+05:00
+POD                              NAME            CPU(cores)   MEMORY(bytes)   
+api-7669d89645-2kcl8             api             18m          66Mi            
+api-7669d89645-gdxb7             api             14m          68Mi            
+api-7669d89645-wql6h             api             20m          68Mi            
+chroma-0                         chroma          15m          22Mi            
+fixture-embed-667d546f99-lfjph   fixture-embed   9m           15Mi            
+real-corpus-m4cvg                indexer         355m         147Mi           
+redis-5f86759678-w62wq           redis           150m         6Mi             
+ui-644946f55c-fzgkg              ui              1m           2Mi             

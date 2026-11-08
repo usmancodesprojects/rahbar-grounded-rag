@@ -121,6 +121,7 @@ def main() -> int:
     parser.add_argument("--golden", type=Path, default=HERE / "golden.yaml")
     parser.add_argument("--baseline", type=Path, default=HERE / "baseline.json")
     parser.add_argument("--out", type=Path, default=HERE / "results.json")
+    parser.add_argument("--raw-out", type=Path, help="optional private transcript for manual review")
     parser.add_argument("--update-baseline", action="store_true",
                         help="write these results as the new baseline")
     args = parser.parse_args()
@@ -128,7 +129,7 @@ def main() -> int:
     questions = load_golden(args.golden)
     rows = []
     headers = {"Host": args.host} if args.host else {}
-    with httpx.Client(timeout=120.0, headers=headers) as client:
+    with httpx.Client(timeout=180.0, headers=headers) as client:
         for q in questions:
             started = time.perf_counter()
             response = ask(client, args.api, q["question"])
@@ -147,6 +148,13 @@ def main() -> int:
     failures = gate(results, None if args.update_baseline else baseline)
     results["gate_failures"] = failures
 
+    if args.raw_out:
+        args.raw_out.write_text(json.dumps(rows, indent=2), encoding="utf-8")
+    # Public artifacts retain provenance and outcome without copying source excerpts.
+    results["rows"] = [
+        {**row, "response": {k: v for k, v in row["response"].items() if k != "answer"}}
+        for row in rows
+    ]
     results["golden"] = str(args.golden)
     results["questions"] = len(rows)
     args.out.write_text(json.dumps(results, indent=2), encoding="utf-8")

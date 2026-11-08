@@ -59,7 +59,8 @@ def eligible(meta: dict, question: str) -> bool:
     return meta["doc_version"] in filt["doc_version"]["$in"]
 
 
-def run(docs: list[Document], golden: Path, out: Path, publish_size: int | None) -> None:
+def run(docs: list[Document], golden: Path, out: Path, publish_size: int | None,
+        reuse_published: bool) -> None:
     settings = get_settings()
     reader = ChromaRetriever(api_settings())
     questions = load_golden(golden)
@@ -68,6 +69,14 @@ def run(docs: list[Document], golden: Path, out: Path, publish_size: int | None)
     source_words = sum(len(p.text.split()) for doc in docs for p in doc.pages)
     report: dict = {"source_words": source_words, "settings": []}
     embedded: dict[str, list[float]] = {}
+    if reuse_published:
+        collection = reader.snapshot()
+        for offset in range(0, collection.count(), 200):
+            batch = collection.get(limit=200, offset=offset, include=["documents", "embeddings"])
+            embedded.update((text, list(map(float, vector)))
+                            for text, vector in zip(batch["documents"], batch["embeddings"],
+                                                    strict=True))
+        print(f"Reused {len(embedded)} embeddings from the verified published pin", flush=True)
     for size, overlap in ((200, 25), (400, 50), (650, 80)):
         pieces = [piece for doc in docs for piece in chunk(doc, size, overlap)]
         unique = list(dict.fromkeys(p.text for p in pieces if p.text not in embedded))
@@ -122,8 +131,9 @@ if __name__ == "__main__":
     parser.add_argument("--golden", type=Path, default=Path("eval/golden.yaml"))
     parser.add_argument("--out", type=Path, default=Path(".local-run/tuning.json"))
     parser.add_argument("--extract-only", action="store_true")
+    parser.add_argument("--reuse-published", action="store_true")
     parser.add_argument("--publish-size", type=int, choices=(200, 400, 650))
     args = parser.parse_args()
     docs = documents(args.snapshot)
     if not args.extract_only:
-        run(docs, args.golden, args.out, args.publish_size)
+        run(docs, args.golden, args.out, args.publish_size, args.reuse_published)

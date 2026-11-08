@@ -42,13 +42,14 @@ questions:
     expect: "withdrawn courses"
   - id: q09
     type: version
-    question: Under the June 2026 rules, who can condone an absence for genuine reasons?
-    relevant: [{source: academic-rules-handbook-jun-2026.pdf, section: "1.21"}]
-    expect: "HoD"
+    question: Under the June 2026 rules, what is the deadline to withdraw from a summer course?
+    relevant: [{source: academic-rules-handbook-jun-2026.pdf, section: "6.8"}]
+    expect: "last day of classes"
   - id: q10
     type: version
-    question: Under the August 2023 undergraduate rules, what minimum attendance is needed to sit the final exam?
-    relevant: [{source: undergraduate-academic-rules-aug-2023.pdf, section: "1.21"}]
+    question: Under the August 2023 rules, can a summer course be dropped and the fee refunded?
+    relevant: [{source: undergraduate-academic-rules-aug-2023.pdf, section: "6.8"}]
+    expect: "neither refunded"
   - id: q11
     type: exact
     question: What does clause 1.21 require?

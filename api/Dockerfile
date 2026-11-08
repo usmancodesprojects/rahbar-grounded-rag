@@ -8,4 +8,4 @@ RUN --mount=type=secret,id=pip_ca,target=/run/secrets/pip_ca \
 COPY app ./app
 USER 10001:10001
 EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]
+CMD ["python", "-m", "app"]

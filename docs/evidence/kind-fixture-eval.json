@@ -1,0 +1,7 @@
+{
+  "recall@3": 1.0,
+  "recall@5": 1.0,
+  "citation_validity": 1.0,
+  "abstention_correctness": 1.0,
+  "questions": 7
+}

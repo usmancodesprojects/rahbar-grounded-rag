@@ -25,7 +25,7 @@ class HostedProvider:
             headers={"Authorization": f"Bearer {self.settings.llm_api_key}"},
             json={"model": self.settings.llm_model, "messages": prompt,
                   "temperature": self.settings.temperature, "response_format": {"type": "json_object"}},
-            timeout=httpx.Timeout(55, connect=5),
+            timeout=httpx.Timeout(self.settings.llm_timeout, connect=5),
         )
         response.raise_for_status()
         data = response.json()

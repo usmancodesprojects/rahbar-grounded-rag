@@ -66,8 +66,13 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install httpx==0.28.1 pyyaml==6.0.2
-      - uses: helm/kind-action@v1.12.0
-        with: {cluster_name: rahbar-ci, version: v0.27.0}
+      - uses: actions/setup-go@v5
+        with: {go-version: '1.24', cache: false}
+      - name: Create the kind cluster
+        run: |
+          GOBIN="$RUNNER_TEMP" go install sigs.k8s.io/kind@v0.27.0
+          "$RUNNER_TEMP/kind" create cluster --name rahbar-ci --wait 120s
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
       - run: bash scripts/install_ingress.sh
       - run: |
           for component in api ui indexer; do

@@ -58,7 +58,15 @@ class Cache:
 
     def previous(self, session: str) -> str:
         value: bytes | None = self.redis.get(f"rahbar:session:{session}")
-        return value.decode() if value else ""
+        if not value:
+            return ""
+        try:
+            turn = json.loads(value)
+        except ValueError:
+            return value.decode()  # Short-lived sessions written by older replicas.
+        return str(turn.get("question", "")) if isinstance(turn, dict) else value.decode()
 
-    def remember(self, session: str, question: str) -> None:
-        self.redis.setex(f"rahbar:session:{session}", 1800, question)
+    def remember(self, session: str, question: str, response: AskResponse) -> None:
+        turn = {"question": question, "answer": response.answer,
+                "answered_from_context": response.answered_from_context}
+        self.redis.setex(f"rahbar:session:{session}", 1800, json.dumps(turn))

@@ -18,9 +18,9 @@ class OllamaProvider:
                               json={"model": self.settings.llm_model, "stream": False,
                                     "format": Answer.model_json_schema(),
                                     "options": {"temperature": self.settings.temperature,
-                                                "num_predict": 750},
+                                                "num_predict": 230},
                                     "messages": messages(question, passages)},
-                              timeout=httpx.Timeout(55, connect=5))
+                              timeout=httpx.Timeout(self.settings.llm_timeout, connect=5))
         response.raise_for_status()
         data = response.json()
         TOKENS.labels("input").observe(data.get("prompt_eval_count", 0))

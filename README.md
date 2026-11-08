@@ -72,4 +72,8 @@ Hosted generation is opt-in. Set `LLM_PROVIDER=hosted`, `HOSTED_BASE_URL`, and `
 
 Use `kubectl -n rahbar port-forward service/api 8000:8000` to inspect internal health and metrics. An optional `X-Session-ID` enables expiring follow-up context. The response always echoes or generates `X-Request-ID`.
 
+The screenshot below shows the Ingress-hosted chat using the CI fixture corpus.
+
+![RAHBAR chat with a cited fixture answer](docs/evidence/fixture-chat.jpg)
+
 The source documents are fetched through `corpus/fetch.py` and fingerprinted in [the corpus manifest](corpus/MANIFEST.md). See [architecture](docs/ARCHITECTURE.md), [pipeline](docs/PIPELINE.md), [failure experiments](docs/FAILURE-ANALYSIS.md), and [deployment evidence](docs/evidence/README.md).

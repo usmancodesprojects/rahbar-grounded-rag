@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: rahbar
   annotations:
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "125"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "175"
 spec:
   ingressClassName: "nginx"
   rules:

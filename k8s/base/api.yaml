@@ -41,7 +41,7 @@ spec:
               containerPort: 8000
           resources:
             requests:
-              cpu: "150m"
+              cpu: "100m"
               memory: "192Mi"
             limits:
               cpu: "1"
@@ -80,7 +80,7 @@ spec:
       volumes:
         - name: "tmp"
           emptyDir: {}
-      terminationGracePeriodSeconds: 130
+      terminationGracePeriodSeconds: 180
   strategy:
     type: RollingUpdate
     rollingUpdate:

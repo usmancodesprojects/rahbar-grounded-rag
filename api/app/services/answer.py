@@ -76,7 +76,7 @@ def answer_question(question: str, retriever: Retriever, provider: LLMProvider,
                         CACHE.labels("hit" if cached else "miss").inc()
                         if cached:
                             if session:
-                                cache.remember(session, question)
+                                cache.remember(session, question, cached)
                             return report(cached.model_copy(update={"request_id": rid, "cached": True}),
                                           settings)
                     passages = retriever.query(collection, query, vector, settings.top_k)
@@ -100,7 +100,7 @@ def answer_question(question: str, retriever: Retriever, provider: LLMProvider,
             if key and not skip_cache and answer.answered_from_context and provider.name != "stub":
                 cache.store(key, question, vector, response)
             if session and not follow_up and answer.answered_from_context:
-                cache.remember(session, question)
+                cache.remember(session, question, response)
         except Exception as exc:
             log.warning("cache write failed", extra={"kind": type(exc).__name__})
     return report(response, settings)

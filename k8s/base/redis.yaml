@@ -45,7 +45,7 @@ spec:
             - "allkeys-lru"
           resources:
             requests:
-              cpu: "50m"
+              cpu: "150m"
               memory: "96Mi"
             limits:
               cpu: "500m"
