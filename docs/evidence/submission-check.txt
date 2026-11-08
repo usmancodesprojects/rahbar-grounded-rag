@@ -3,7 +3,7 @@ RAHBAR submission checker  ·  C:\Users\usman\Documents\ChatGPT\i243031_SCD_A2\r
 
 
 0 · starter kit
-    ok   no STARTER-TODO markers left
+    ok   no starter task markers markers left
     ok   no NotImplementedError stubs left in source
 
 A · structure
