@@ -49,7 +49,7 @@ def windows(text: str, size: int, overlap: int) -> Iterator[str]:
 def chunk(doc: Document, size: int, overlap: int) -> list[Chunk]:
     if not 0 <= overlap < size:
         raise ValueError("chunk overlap must be nonnegative and smaller than size")
-    chunks = []
+    chunks: list[Chunk] = []
     section = "Overview"
     for page in doc.pages:
         for section, content in sections(page.text, section, doc.source.lower().endswith(".md")):

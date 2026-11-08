@@ -1,7 +1,7 @@
 apiVersion: "apps/v1"
-kind: "Deployment"
+kind: Deployment
 metadata:
-  name: "redis"
+  name: redis
 spec:
   replicas: 1
   selector:
@@ -12,7 +12,7 @@ spec:
       labels:
         app: "redis"
     spec:
-      serviceAccountName: "redis"
+      serviceAccountName: redis
       automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
@@ -20,7 +20,7 @@ spec:
         runAsGroup: 10001
         fsGroup: 10001
         seccompProfile:
-          type: "RuntimeDefault"
+          type: RuntimeDefault
       containers:
         - name: "redis"
           imagePullPolicy: "IfNotPresent"
@@ -28,8 +28,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop:
-                - "ALL"
+              drop: [ALL]
           image: "redis:7.4.2-alpine"
           ports:
             - name: "redis"
@@ -69,12 +68,12 @@ spec:
           persistentVolumeClaim:
             claimName: "redis-data"
   strategy:
-    type: "Recreate"
+    type: Recreate
 ---
 apiVersion: "v1"
-kind: "PersistentVolumeClaim"
+kind: PersistentVolumeClaim
 metadata:
-  name: "redis-data"
+  name: redis-data
 spec:
   accessModes:
     - "ReadWriteOnce"

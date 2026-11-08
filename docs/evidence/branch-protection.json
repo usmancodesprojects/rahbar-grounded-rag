@@ -1,0 +1,1 @@
+{"branch":"main","contexts":["lint","test","manifests","build (api)","build (ui)","build (indexer)","scan (api)","scan (ui)","scan (indexer)","e2e-eval"],"enforce_admins":true,"required_approvals":1,"strict_status_checks":true}

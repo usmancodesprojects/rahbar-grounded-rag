@@ -1,13 +1,10 @@
 """Extract page text and preserve explicit structure."""
 from __future__ import annotations
 
-import logging
 import re
 from pathlib import Path
 
 from .models import Document, Page
-
-log = logging.getLogger(__name__)
 
 
 def extract(path: str, doc_version: str, superseded: bool) -> Document:
@@ -23,9 +20,14 @@ def extract(path: str, doc_version: str, superseded: bool) -> Document:
                 if ocr and page.images:
                     import pytesseract
 
-                    text = pytesseract.image_to_string(page.to_image(resolution=220).original)
-                if not text.strip():
-                    log.warning("No text recovered from %s page %s", file.name, number)
+                    resolution = min(190.0, 72.0 * 2400 / max(page.width, page.height))
+                    image = page.to_image(resolution=resolution).original
+                    try:
+                        text = pytesseract.image_to_string(image, config="--psm 6", timeout=25)
+                    except RuntimeError:
+                        text = ""
+                    finally:
+                        image.close()
                 if not ocr:
                     tables = []
                     for table in page.find_tables():

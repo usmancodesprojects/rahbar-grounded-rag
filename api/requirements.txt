@@ -1,9 +1,9 @@
 # Pinned: an unpinned dependency is the drift problem from Lecture 04.
-fastapi==0.115.12
-uvicorn==0.34.2
-pydantic==2.11.4
+fastapi==0.139.0
+uvicorn==0.41.0
+pydantic==2.13.4
 httpx==0.28.1
-prometheus-client==0.21.1
+prometheus-client==0.26.0
 # Thin HTTP client for the Chroma server. Run the chromadb/chroma image with the SAME
 # version (1.0.12): a client and server from different versions may not talk.
 chromadb-client==1.0.12

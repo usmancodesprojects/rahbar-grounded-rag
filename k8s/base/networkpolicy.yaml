@@ -1,7 +1,7 @@
 apiVersion: "networking.k8s.io/v1"
-kind: "NetworkPolicy"
+kind: NetworkPolicy
 metadata:
-  name: "default-deny"
+  name: default-deny
 spec:
   podSelector: {}
   policyTypes:
@@ -11,9 +11,9 @@ spec:
   egress: []
 ---
 apiVersion: "networking.k8s.io/v1"
-kind: "NetworkPolicy"
+kind: NetworkPolicy
 metadata:
-  name: "dns"
+  name: dns
 spec:
   podSelector: {}
   policyTypes:
@@ -33,9 +33,9 @@ spec:
           protocol: "TCP"
 ---
 apiVersion: "networking.k8s.io/v1"
-kind: "NetworkPolicy"
+kind: NetworkPolicy
 metadata:
-  name: "ui"
+  name: ui
 spec:
   podSelector:
     matchLabels:
@@ -70,9 +70,9 @@ spec:
           protocol: "TCP"
 ---
 apiVersion: "networking.k8s.io/v1"
-kind: "NetworkPolicy"
+kind: NetworkPolicy
 metadata:
-  name: "api"
+  name: api
 spec:
   podSelector:
     matchLabels:
@@ -123,9 +123,9 @@ spec:
           protocol: "TCP"
 ---
 apiVersion: "networking.k8s.io/v1"
-kind: "NetworkPolicy"
+kind: NetworkPolicy
 metadata:
-  name: "chroma"
+  name: chroma
 spec:
   podSelector:
     matchLabels:
@@ -145,9 +145,9 @@ spec:
           protocol: "TCP"
 ---
 apiVersion: "networking.k8s.io/v1"
-kind: "NetworkPolicy"
+kind: NetworkPolicy
 metadata:
-  name: "redis"
+  name: redis
 spec:
   podSelector:
     matchLabels:
@@ -164,9 +164,9 @@ spec:
           protocol: "TCP"
 ---
 apiVersion: "networking.k8s.io/v1"
-kind: "NetworkPolicy"
+kind: NetworkPolicy
 metadata:
-  name: "indexer"
+  name: indexer
 spec:
   podSelector:
     matchLabels:

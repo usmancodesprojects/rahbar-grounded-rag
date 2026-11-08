@@ -19,7 +19,7 @@ flowchart LR
     Config --> Job
 ```
 
-## From a clean clone
+## Apply order from a clean clone
 
 Use Python 3.12, Bash, GNU Make, Docker, kubectl, minikube, and Ollama. Windows users can run the shell commands in WSL 2 with Docker Desktop integration.
 
@@ -61,7 +61,9 @@ make eval
 
 Hosted generation is opt-in. Set `LLM_PROVIDER=hosted`, `HOSTED_BASE_URL`, and `LLM_MODEL`, allow HTTPS egress to the chosen endpoint, and create the Secret with `kubectl -n rahbar create secret generic rahbar-secret --from-literal=LLM_API_KEY="$LLM_API_KEY"`. Restart the API after changing its config.
 
-| Endpoint | Behavior |
+## API endpoints
+
+| Method and endpoint | Behavior |
 | --- | --- |
 | `POST /api/ask` | Accepts `{"question":"..."}` with 3–500 characters. Returns citations, retrieval references, abstention, and cache status. |
 | `GET /healthz` | Process-only liveness. |

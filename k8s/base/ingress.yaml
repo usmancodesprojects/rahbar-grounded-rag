@@ -1,7 +1,7 @@
 apiVersion: "networking.k8s.io/v1"
-kind: "Ingress"
+kind: Ingress
 metadata:
-  name: "rahbar"
+  name: rahbar
   annotations:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "125"
 spec:

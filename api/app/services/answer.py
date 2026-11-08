@@ -20,8 +20,9 @@ log = logging.getLogger("rahbar.answer")
 def generate(question: str, evidence: list[Passage], provider: LLMProvider) -> Answer:
     if not evidence or INJECTION.search(question):
         return abstention()
+    retry_attempts = (1, 2)
     with STAGE.labels("generation").time():
-        for attempt in (1, 2):  # Retry a malformed or ungrounded answer once.
+        for attempt in retry_attempts:
             try:
                 answer = Answer.model_validate(provider.generate(question, evidence), strict=True)
                 if grounded(answer, evidence):
@@ -56,6 +57,7 @@ def answer_question(question: str, retriever: Retriever, provider: LLMProvider,
     passages: list[Passage] = []
     vector: list[float] = []
     key = ""
+    skip_cache = follow_up or bool(INJECTION.search(question))
     answer = abstention()
     try:
         if follow_up and cache and session:
@@ -69,7 +71,7 @@ def answer_question(question: str, retriever: Retriever, provider: LLMProvider,
                     vector = retriever.embed(query, collection.metadata["dimension"])
                     key = (f"rahbar:cache:{collection.id}:{settings.llm_provider}:"
                            f"{settings.llm_model}:{settings.top_k}:{settings.relevance_floor}")
-                    if cache and not follow_up and not INJECTION.search(question):
+                    if cache and not skip_cache:
                         cached = cache.lookup(key, question, vector, settings.cache_threshold)
                         CACHE.labels("hit" if cached else "miss").inc()
                         if cached:
@@ -95,7 +97,7 @@ def answer_question(question: str, retriever: Retriever, provider: LLMProvider,
     )
     if cache:
         try:
-            if key and not follow_up and answer.answered_from_context and provider.name != "stub":
+            if key and not skip_cache and answer.answered_from_context and provider.name != "stub":
                 cache.store(key, question, vector, response)
             if session and not follow_up and answer.answered_from_context:
                 cache.remember(session, question)

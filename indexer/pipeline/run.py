@@ -49,7 +49,7 @@ def discover(corpus_dir: str) -> list[tuple[Path, str, bool]]:
     corpus/fetch.py writes _index.json next to the files it downloads; use it when
     present. Otherwise read Markdown front matter (the CI fixtures work this way).
     """
-    root = Path(corpus_dir)
+    root = Path(corpus_dir).resolve()
     index = root / "_index.json"
     if index.exists():
         entries = json.loads(index.read_text(encoding="utf-8"))
@@ -82,7 +82,8 @@ def run_pipeline(settings: IndexerSettings) -> int:
         doc = clean(extract(str(path), doc_version, superseded))
         pieces = chunk(doc, settings.chunk_size, settings.chunk_overlap)
         log("chunked", source=path.name, chunks=len(pieces), pages=len(doc.pages),
-            ocr_pages=[page.page for page in doc.pages if page.ocr])
+            ocr_pages=[page.page for page in doc.pages if page.ocr],
+            empty_pages=[page.page for page in doc.pages if not page.text.strip()])
         if not pieces:
             raise ValueError(f"no indexable passages from {path.name}")
         all_chunks.extend(pieces)

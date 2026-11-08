@@ -11,7 +11,7 @@ FOLLOW_UP = re.compile(
     re.I,
 )
 SENSITIVE = re.compile(r"\b(?:\d+(?:[.-]\d+)*|not|no|without|except|before|after|"
-                       r"minimum|maximum|old|current|[a-z]{2,}\d+)\b", re.I)
+                       r"minimum|maximum|old|older|previous|superseded|archived|repealed|current|[a-z]{2,}\d+)\b", re.I)
 
 
 def scope(question: str) -> list[str]:

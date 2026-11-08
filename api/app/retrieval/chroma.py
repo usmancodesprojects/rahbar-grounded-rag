@@ -17,7 +17,11 @@ log = logging.getLogger(__name__)
 def version_filter(question: str) -> dict[str, Any]:
     match = re.search(r"\b(?:19|20)\d{2}(?:-\d{2})?\b", question)
     if not match:
-        return {"superseded": False}
+        archived = re.search(
+            r"\b(old|older|previous|superseded|archived|repealed)\s+"
+            r"(undergraduate\s+)?(rules|policy|version|handbook|edition)\b", question, re.I
+        )
+        return {"superseded": bool(archived)}
     version = match[0]
     year = version[:4]
     versions = [year, *(f"{year}-{month:02}" for month in range(1, 13))]

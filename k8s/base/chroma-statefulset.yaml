@@ -1,7 +1,7 @@
 apiVersion: "apps/v1"
-kind: "StatefulSet"
+kind: StatefulSet
 metadata:
-  name: "chroma"
+  name: chroma
 spec:
   serviceName: "chroma"
   replicas: 1
@@ -13,7 +13,7 @@ spec:
       labels:
         app: "chroma"
     spec:
-      serviceAccountName: "chroma"
+      serviceAccountName: chroma
       automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
@@ -21,7 +21,7 @@ spec:
         runAsGroup: 10001
         fsGroup: 10001
         seccompProfile:
-          type: "RuntimeDefault"
+          type: RuntimeDefault
       containers:
         - name: "chroma"
           imagePullPolicy: "IfNotPresent"
@@ -29,8 +29,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop:
-                - "ALL"
+              drop: [ALL]
           image: "chromadb/chroma:1.0.12"
           ports:
             - name: "http"

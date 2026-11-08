@@ -1,7 +1,7 @@
 apiVersion: "v1"
-kind: "ConfigMap"
+kind: ConfigMap
 metadata:
-  name: "rahbar-config"
+  name: rahbar-config
 data:
   RETRIEVER: "chroma"
   LLM_PROVIDER: "ollama-host"

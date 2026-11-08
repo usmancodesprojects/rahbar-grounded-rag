@@ -1,7 +1,7 @@
 apiVersion: "batch/v1"
-kind: "Job"
+kind: Job
 metadata:
-  name: "indexer"
+  name: indexer
 spec:
   backoffLimit: 2
   parallelism: 1
@@ -11,7 +11,8 @@ spec:
       labels:
         app: "indexer"
     spec:
-      serviceAccountName: "indexer"
+      restartPolicy: OnFailure
+      serviceAccountName: indexer
       automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
@@ -19,7 +20,7 @@ spec:
         runAsGroup: 10001
         fsGroup: 10001
         seccompProfile:
-          type: "RuntimeDefault"
+          type: RuntimeDefault
       containers:
         - name: "indexer"
           imagePullPolicy: "IfNotPresent"
@@ -27,8 +28,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop:
-                - "ALL"
+              drop: [ALL]
           image: "rahbar-indexer:dev"
           envFrom:
             - configMapRef:
@@ -55,5 +55,4 @@ spec:
         - name: "corpus"
           persistentVolumeClaim:
             claimName: "corpus-data"
-      restartPolicy: "OnFailure"
   suspend: true

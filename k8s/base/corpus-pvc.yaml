@@ -1,7 +1,7 @@
 apiVersion: "v1"
-kind: "PersistentVolumeClaim"
+kind: PersistentVolumeClaim
 metadata:
-  name: "corpus-data"
+  name: corpus-data
 spec:
   accessModes:
     - "ReadWriteOnce"

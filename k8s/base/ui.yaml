@@ -1,7 +1,7 @@
 apiVersion: "apps/v1"
-kind: "Deployment"
+kind: Deployment
 metadata:
-  name: "ui"
+  name: ui
 spec:
   replicas: 1
   selector:
@@ -12,7 +12,7 @@ spec:
       labels:
         app: "ui"
     spec:
-      serviceAccountName: "ui"
+      serviceAccountName: ui
       automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
@@ -20,7 +20,7 @@ spec:
         runAsGroup: 10001
         fsGroup: 10001
         seccompProfile:
-          type: "RuntimeDefault"
+          type: RuntimeDefault
       containers:
         - name: "ui"
           imagePullPolicy: "IfNotPresent"
@@ -28,8 +28,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop:
-                - "ALL"
+              drop: [ALL]
           image: "rahbar-ui:dev"
           ports:
             - name: "http"

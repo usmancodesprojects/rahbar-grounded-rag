@@ -33,7 +33,7 @@ def test_poisoned_index_hit_is_excluded_before_generation() -> None:
     assert result.retrieved[0].chunk_id == "poison"
 
 
-def test_retry_then_abstain_on_fabricated_quote() -> None:
+def test_validation_retry_then_abstain_on_fabricated_quote() -> None:
     provider = Mock()
     provider.name = "unit"
     provider.generate.return_value = Answer(
