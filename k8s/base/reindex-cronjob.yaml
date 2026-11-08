@@ -1,0 +1,64 @@
+apiVersion: "batch/v1"
+kind: "CronJob"
+metadata:
+  name: "reindex"
+spec:
+  schedule: "0 2 * * 0"
+  concurrencyPolicy: "Forbid"
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      parallelism: 1
+      activeDeadlineSeconds: 3600
+      template:
+        metadata:
+          labels:
+            app: "indexer"
+        spec:
+          serviceAccountName: "indexer"
+          automountServiceAccountToken: false
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            fsGroup: 10001
+            seccompProfile:
+              type: "RuntimeDefault"
+          containers:
+            - name: "indexer"
+              imagePullPolicy: "IfNotPresent"
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop:
+                    - "ALL"
+              image: "rahbar-indexer:dev"
+              envFrom:
+                - configMapRef:
+                    name: "rahbar-config"
+                - secretRef:
+                    name: "rahbar-secret"
+                    optional: true
+              resources:
+                requests:
+                  cpu: "250m"
+                  memory: "256Mi"
+                limits:
+                  cpu: "2"
+                  memory: "1Gi"
+              volumeMounts:
+                - name: "tmp"
+                  mountPath: "/tmp"
+                - name: "corpus"
+                  mountPath: "/corpus"
+                  readOnly: true
+          volumes:
+            - name: "tmp"
+              emptyDir: {}
+            - name: "corpus"
+              persistentVolumeClaim:
+                claimName: "corpus-data"
+          restartPolicy: "OnFailure"

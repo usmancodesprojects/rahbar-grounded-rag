@@ -1,0 +1,189 @@
+apiVersion: "networking.k8s.io/v1"
+kind: "NetworkPolicy"
+metadata:
+  name: "default-deny"
+spec:
+  podSelector: {}
+  policyTypes:
+    - "Ingress"
+    - "Egress"
+  ingress: []
+  egress: []
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "NetworkPolicy"
+metadata:
+  name: "dns"
+spec:
+  podSelector: {}
+  policyTypes:
+    - "Egress"
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: "kube-system"
+          podSelector:
+            matchLabels:
+              k8s-app: "kube-dns"
+      ports:
+        - port: 53
+          protocol: "UDP"
+        - port: 53
+          protocol: "TCP"
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "NetworkPolicy"
+metadata:
+  name: "ui"
+spec:
+  podSelector:
+    matchLabels:
+      app: "ui"
+  policyTypes:
+    - "Ingress"
+    - "Egress"
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: "ingress-nginx"
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: "ingress-nginx"
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: "kube-system"
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: "ingress-nginx"
+      ports:
+        - port: 8080
+          protocol: "TCP"
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: "api"
+      ports:
+        - port: 8000
+          protocol: "TCP"
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "NetworkPolicy"
+metadata:
+  name: "api"
+spec:
+  podSelector:
+    matchLabels:
+      app: "api"
+  policyTypes:
+    - "Ingress"
+    - "Egress"
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: "ingress-nginx"
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: "ingress-nginx"
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: "kube-system"
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: "ingress-nginx"
+        - podSelector:
+            matchLabels:
+              app: "ui"
+      ports:
+        - port: 8000
+          protocol: "TCP"
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: "chroma"
+      ports:
+        - port: 8000
+          protocol: "TCP"
+    - to:
+        - podSelector:
+            matchLabels:
+              app: "redis"
+      ports:
+        - port: 6379
+          protocol: "TCP"
+    - to:
+        - ipBlock:
+            cidr: "192.168.49.1/32"
+      ports:
+        - port: 11434
+          protocol: "TCP"
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "NetworkPolicy"
+metadata:
+  name: "chroma"
+spec:
+  podSelector:
+    matchLabels:
+      app: "chroma"
+  policyTypes:
+    - "Ingress"
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: "api"
+        - podSelector:
+            matchLabels:
+              app: "indexer"
+      ports:
+        - port: 8000
+          protocol: "TCP"
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "NetworkPolicy"
+metadata:
+  name: "redis"
+spec:
+  podSelector:
+    matchLabels:
+      app: "redis"
+  policyTypes:
+    - "Ingress"
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: "api"
+      ports:
+        - port: 6379
+          protocol: "TCP"
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "NetworkPolicy"
+metadata:
+  name: "indexer"
+spec:
+  podSelector:
+    matchLabels:
+      app: "indexer"
+  policyTypes:
+    - "Egress"
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: "chroma"
+      ports:
+        - port: 8000
+          protocol: "TCP"
+    - to:
+        - ipBlock:
+            cidr: "192.168.49.1/32"
+      ports:
+        - port: 11434
+          protocol: "TCP"
