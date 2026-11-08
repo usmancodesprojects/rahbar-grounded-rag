@@ -28,7 +28,8 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop: [ALL]
+              drop:
+                - ALL
           image: "rahbar-indexer:dev"
           envFrom:
             - configMapRef:

@@ -38,7 +38,7 @@ class Citation(BaseModel):
 class Answer(BaseModel):
     """The model's output contract. Send its JSON schema to the model, then validate."""
 
-    reasoning: str
+    reasoning: Literal[""]
     answer: str
     citations: list[Citation]
     answered_from_context: bool

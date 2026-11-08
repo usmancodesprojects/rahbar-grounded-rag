@@ -28,7 +28,8 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop: [ALL]
+              drop:
+                - ALL
           image: "redis:7.4.2-alpine"
           ports:
             - name: "redis"

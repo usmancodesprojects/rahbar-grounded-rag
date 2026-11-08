@@ -20,13 +20,14 @@ log = logging.getLogger("rahbar.answer")
 def generate(question: str, evidence: list[Passage], provider: LLMProvider) -> Answer:
     if not evidence or INJECTION.search(question):
         return abstention()
-    retry_attempts = (1, 2)
+    retry = (1, 2)
     with STAGE.labels("generation").time():
-        for attempt in retry_attempts:
+        for attempt in retry:
             try:
                 answer = Answer.model_validate(provider.generate(question, evidence), strict=True)
-                if grounded(answer, evidence):
-                    return answer if answer.answered_from_context else abstention()
+                verified = grounded(answer, evidence)
+                if verified is not None:
+                    return verified if verified.answered_from_context else abstention()
                 raise ValueError("invalid grounding")
             except (ValueError, TypeError, KeyError, IndexError) as exc:
                 log.warning("invalid generation", extra={"attempt": attempt, "kind": type(exc).__name__})

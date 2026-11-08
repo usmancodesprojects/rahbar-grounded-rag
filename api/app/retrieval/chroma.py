@@ -45,7 +45,7 @@ class ChromaRetriever:
 
             self.client = chromadb.HttpClient(
                 host=self.settings.chroma_host, port=self.settings.chroma_port,
-                settings=ChromaSettings(anonymized_telemetry=False, chroma_server_http_port=8000),
+                settings=ChromaSettings(anonymized_telemetry=False),
             )
         pointer = self.client.get_collection(self.settings.collection, embedding_function=None)
         metadata = pointer.metadata or {}
@@ -68,7 +68,7 @@ class ChromaRetriever:
                       if self.settings.embed_model.startswith("nomic-embed-text") else question)
         response = httpx.post(f"{self.settings.ollama_url.rstrip('/')}/api/embed",
                               json={"model": self.settings.embed_model, "input": [input_text],
-                                    "truncate": False}, timeout=httpx.Timeout(15, connect=3))
+                                    "truncate": False}, timeout=httpx.Timeout(25, connect=3))
         response.raise_for_status()
         data = response.json()
         vector: list[float] = data["embeddings"][0]

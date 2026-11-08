@@ -1,0 +1,2 @@
+e2e-eval	Run eval/run_eval.py through Ingress	2026-11-08T09:57:01.9235301Z GATE FAILED
+e2e-eval	Run eval/run_eval.py through Ingress	2026-11-08T09:57:01.9235782Z   - Recall@5 dropped by more than 5 percentage points

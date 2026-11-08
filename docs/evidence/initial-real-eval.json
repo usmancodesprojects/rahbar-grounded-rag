@@ -1,0 +1,10 @@
+{
+  "recall@3": 0.7692307692307693,
+  "recall@5": 0.7692307692307693,
+  "abstention_correctness": 1.0,
+  "citation_validity": null,
+  "answered_questions": 0,
+  "gate_failures": [
+    "Citation validity must reach 95% with at least one evaluated answer"
+  ]
+}

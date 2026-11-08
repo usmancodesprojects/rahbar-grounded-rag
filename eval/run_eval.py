@@ -129,7 +129,7 @@ def main() -> int:
     questions = load_golden(args.golden)
     rows = []
     headers = {"Host": args.host} if args.host else {}
-    with httpx.Client(timeout=180.0, headers=headers) as client:
+    with httpx.Client(timeout=195.0, headers=headers) as client:
         for q in questions:
             started = time.perf_counter()
             response = ask(client, args.api, q["question"])
@@ -155,7 +155,9 @@ def main() -> int:
         {**row, "response": {k: v for k, v in row["response"].items() if k != "answer"}}
         for row in rows
     ]
-    results["golden"] = str(args.golden)
+    golden_path = args.golden.resolve()
+    results["golden"] = (golden_path.relative_to(HERE.parent).as_posix()
+                         if golden_path.is_relative_to(HERE.parent) else golden_path.name)
     results["questions"] = len(rows)
     args.out.write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(f"\nresults written to {args.out}")

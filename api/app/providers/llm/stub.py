@@ -15,7 +15,7 @@ class StubProvider:
     def generate(self, question: str, passages: list[Passage]) -> Answer:
         if not passages:
             return Answer(
-                reasoning="stub: nothing was retrieved",
+                reasoning="",
                 answer="(stub) No passages were retrieved for this question.",
                 citations=[],
                 answered_from_context=False,
@@ -23,7 +23,7 @@ class StubProvider:
             )
         top = passages[0]
         return Answer(
-            reasoning="stub: cites the first retrieved passage",
+            reasoning="",
             answer=f"{' '.join(top.text.split())} [{top.source} / {top.section}]",
             citations=[Citation(source=top.source, section=top.section, page=top.page)],
             answered_from_context=True,

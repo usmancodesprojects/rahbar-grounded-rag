@@ -39,8 +39,8 @@ Start Ollama in a separate terminal with `OLLAMA_HOST=0.0.0.0 ollama serve`. Res
 
 ```bash
 ollama pull nomic-embed-text:v1.5
-ollama pull llama3.2:3b
-make apply
+ollama pull llama3.2:1b
+kubectl apply -k k8s/overlays/dev
 kubectl -n rahbar rollout status statefulset/chroma --timeout=240s
 bash scripts/load_corpus.sh
 kubectl -n rahbar patch job indexer --type=merge -p '{"spec":{"suspend":false}}'
@@ -63,12 +63,12 @@ Hosted generation is opt-in. Set `LLM_PROVIDER=hosted`, `HOSTED_BASE_URL`, and `
 
 ## API endpoints
 
-| Method and endpoint | Behavior |
-| --- | --- |
-| `POST /api/ask` | Accepts `{"question":"..."}` with 3–500 characters. Returns citations, retrieval references, abstention, and cache status. |
-| `GET /healthz` | Process-only liveness. |
-| `GET /readyz` | Checks a non-empty index, embedding pin, and Redis. Reports failures with 503. |
-| `GET /metrics` | Prometheus counters and histograms. |
+| Method | Path | Behavior |
+| --- | --- | --- |
+| POST | `/api/ask` | Accepts `{"question":"..."}` with 3–500 characters. Returns citations, retrieval references, abstention, and cache status. |
+| GET | `/healthz` | Process-only liveness. |
+| GET | `/readyz` | Checks a non-empty index, embedding pin, and Redis. Reports failures with 503. |
+| GET | `/metrics` | Prometheus counters and histograms. |
 
 Use `kubectl -n rahbar port-forward service/api 8000:8000` to inspect internal health and metrics. An optional `X-Session-ID` enables expiring follow-up context. The response always echoes or generates `X-Request-ID`.
 

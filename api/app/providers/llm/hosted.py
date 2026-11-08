@@ -2,7 +2,7 @@
 import httpx
 
 from ...config import Settings
-from ...routes.metrics import TOKENS
+from ...routes.metrics import record_tokens
 from ...schemas import Answer, Passage
 from .prompt import messages
 
@@ -30,6 +30,5 @@ class HostedProvider:
         response.raise_for_status()
         data = response.json()
         usage = data.get("usage") or {}
-        TOKENS.labels("input").observe(usage.get("prompt_tokens", 0))
-        TOKENS.labels("output").observe(usage.get("completion_tokens", 0))
+        record_tokens(usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0))
         return Answer.model_validate_json(data["choices"][0]["message"]["content"], strict=True)

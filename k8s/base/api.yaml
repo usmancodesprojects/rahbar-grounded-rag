@@ -28,7 +28,8 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop: [ALL]
+              drop:
+                - ALL
           image: "rahbar-api:dev"
           envFrom:
             - configMapRef:
@@ -80,7 +81,7 @@ spec:
       volumes:
         - name: "tmp"
           emptyDir: {}
-      terminationGracePeriodSeconds: 180
+      terminationGracePeriodSeconds: 190
   strategy:
     type: RollingUpdate
     rollingUpdate:

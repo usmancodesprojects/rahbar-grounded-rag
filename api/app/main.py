@@ -60,6 +60,8 @@ app = FastAPI(title="RAHBAR API", lifespan=lifespan)
 async def request_context(request: Request, call_next):  # type: ignore[no-untyped-def]
     rid = request.headers.get("X-Request-ID") or uuid.uuid4().hex
     token = request_id_var.set(rid)
+    usage = [0, 0]
+    usage_token = metrics.REQUEST_TOKENS.set(usage)
     start = time.perf_counter()
     status = 500
     try:
@@ -76,6 +78,10 @@ async def request_context(request: Request, call_next):  # type: ignore[no-untyp
         if path not in ("/healthz", "/readyz", "/metrics"):
             log.info("request", extra={"path": path, "status": status,
                                        "ms": round(elapsed * 1000, 1)})
+        if path == "/api/ask":
+            metrics.TOKENS.labels("input").observe(usage[0])
+            metrics.TOKENS.labels("output").observe(usage[1])
+        metrics.REQUEST_TOKENS.reset(usage_token)
         request_id_var.reset(token)
 
 

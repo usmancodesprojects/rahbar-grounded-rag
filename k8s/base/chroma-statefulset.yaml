@@ -29,7 +29,8 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
-              drop: [ALL]
+              drop:
+                - ALL
           image: "chromadb/chroma:1.0.12"
           ports:
             - name: "http"

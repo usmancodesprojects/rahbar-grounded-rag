@@ -6,6 +6,8 @@ retrieval latency, generation latency, cache hits, abstentions, fallbacks, token
 
 from __future__ import annotations
 
+from contextvars import ContextVar
+
 from fastapi import APIRouter, Response
 from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
 
@@ -24,8 +26,18 @@ STAGE = Histogram("rahbar_stage_seconds", "Pipeline stage latency", ["stage"])
 CACHE = Counter("rahbar_cache_total", "Semantic cache lookups", ["result"])
 ABSTENTIONS = Counter("rahbar_abstentions_total", "Abstained answers")
 FALLBACKS = Counter("rahbar_fallbacks_total", "Safe fallbacks")
-TOKENS = Histogram("rahbar_model_tokens", "Provider tokens per call", ["direction"],
+TOKENS = Histogram("rahbar_model_tokens", "Provider tokens per API request", ["direction"],
                    buckets=(16, 64, 128, 256, 512, 1024, 2048, 4096))
+
+
+REQUEST_TOKENS: ContextVar[list[int] | None] = ContextVar("request_tokens", default=None)
+
+
+def record_tokens(input_tokens: int, output_tokens: int) -> None:
+    usage = REQUEST_TOKENS.get()
+    if usage is not None:
+        usage[0] += input_tokens
+        usage[1] += output_tokens
 
 
 @router.get("/metrics")

@@ -33,7 +33,7 @@ def test_poisoned_index_hit_is_excluded_before_generation() -> None:
     assert result.retrieved[0].chunk_id == "poison"
 
 
-def test_validation_retry_then_abstain_on_fabricated_quote() -> None:
+def test_validation_fallback_after_retry_on_fabricated_quote() -> None:
     provider = Mock()
     provider.name = "unit"
     provider.generate.return_value = Answer(
@@ -89,3 +89,19 @@ def test_version_and_cache_boundaries() -> None:
     assert scope("under 2023") != scope("under 2026")
     assert cosine([1.0, 0.0], [1.0, 0.0]) == 1
     assert cosine([1.0, 0.0], [0.0, 1.0]) == 0
+
+def test_ollama_selection_becomes_a_verified_canonical_citation(monkeypatch) -> None:
+    from app.providers.llm.ollama import OllamaProvider
+
+    upstream = Mock()
+    upstream.json.return_value = {"message": {"content": (
+        '{"reasoning":"","answer":"1","citations":[],"answered_from_context":true,"confidence":"high"}'
+    )}}
+    post = Mock(return_value=upstream)
+    monkeypatch.setattr("app.providers.llm.ollama.httpx.post", post)
+    provider = OllamaProvider(Settings())
+    result = provider.generate("Is attendance mandatory?", [EVIDENCE])
+    assert result.answer == EVIDENCE.text
+    assert result.citations == [Citation(source=EVIDENCE.source, section=EVIDENCE.section,
+                                         page=EVIDENCE.page)]
+    assert post.call_args.kwargs["json"]["format"]["oneOf"][0]["properties"]["answer"]["enum"] == ["1"]
